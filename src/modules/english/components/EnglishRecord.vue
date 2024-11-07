@@ -39,9 +39,9 @@ function saveRecord() {
     <input v-model="duration" type="text" placeholder="请输入学习时长">
     <input v-model="content" type="text" placeholder="请输入学习内容">
     <input v-model="type" type="text" placeholder="请输入学习类型">
-    <button @click="saveRecord">
+    <el-button type="success" @click="saveRecord">
       保存
-    </button>
+    </el-button>
   </div>
   <div>
     {{ store.currentRecords }}
