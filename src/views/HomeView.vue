@@ -5,6 +5,9 @@ import TheWelcome from '../components/TheWelcome.vue'
 
 <template>
   <main>
+    <div class="text-red-500">
+      Hello
+    </div>
     <EnglishRecord />
   </main>
 </template>
