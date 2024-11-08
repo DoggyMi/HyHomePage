@@ -13,3 +13,5 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+// eslint-disable-next-line no-console
+console.log('main.ts')
