@@ -15,6 +15,11 @@ export const useEnglishStore = defineStore('english', () => {
     await loadStudyRecords()
   }
 
+  async function clearStudyRecords() {
+    await englishStorageService.clearStudyRecords()
+    await loadStudyRecords()
+  }
+
   //   async function startNewSession() {
   //     const session: StudySession = {
   //       id: crypto.randomUUID(),
@@ -35,7 +40,7 @@ export const useEnglishStore = defineStore('english', () => {
 
   return {
     currentRecords,
-    // currentSession,
+    clearStudyRecords,
     loadStudyRecords,
     addStudyRecord,
     // startNewSession,

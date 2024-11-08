@@ -32,6 +32,18 @@ export class EnglishStorageService {
     }
   }
 
+  // 删除学习记录
+  async deleteStudyRecord(id: string): Promise<void> {
+    const records = await this.getAllStudyRecords()
+    const filteredRecords = records.filter(record => record.id !== id)
+    await localforage.setItem(STORAGE_KEYS.STUDY_RECORDS, filteredRecords)
+  }
+
+  // 清空学习记录
+  async clearStudyRecords(): Promise<void> {
+    await localforage.removeItem(STORAGE_KEYS.STUDY_RECORDS)
+  }
+
   // 保存学习会话
   async saveStudySession(session: StudySession): Promise<void> {
     const sessions = await this.getStudySessions()
