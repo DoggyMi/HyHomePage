@@ -16,6 +16,10 @@ export class EnglishStorageService {
     await localforage.setItem(STORAGE_KEYS.STUDY_RECORDS, records)
   }
 
+  async saveStudyRecords(records: StudyRecord[]): Promise<void> {
+    await localforage.setItem(STORAGE_KEYS.STUDY_RECORDS, records)
+  }
+
   // 获取所有学习记录
   async getAllStudyRecords(): Promise<StudyRecord[]> {
     const records = await localforage.getItem<StudyRecord[]>(STORAGE_KEYS.STUDY_RECORDS)

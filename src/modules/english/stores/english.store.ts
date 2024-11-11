@@ -15,6 +15,11 @@ export const useEnglishStore = defineStore('english', () => {
     await loadStudyRecords()
   }
 
+  async function addStudyRecords(records: StudyRecord[]) {
+    await englishStorageService.saveStudyRecords(records)
+    await loadStudyRecords()
+  }
+
   async function deleteStudyRecord(recordId: string) {
     await englishStorageService.deleteStudyRecord(recordId)
     await loadStudyRecords()
@@ -31,5 +36,6 @@ export const useEnglishStore = defineStore('english', () => {
     loadStudyRecords,
     deleteStudyRecord,
     addStudyRecord,
+    addStudyRecords,
   }
 })
