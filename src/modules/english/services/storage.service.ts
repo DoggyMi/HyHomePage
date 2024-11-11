@@ -1,4 +1,4 @@
-import type { StudyRecord, StudySession } from '../types/record.types'
+import type { StudyRecord } from '../types/record.types'
 import localforage from 'localforage'
 import { STORAGE_KEYS } from '../constants/storage-keys'
 
@@ -42,19 +42,6 @@ export class EnglishStorageService {
   // 清空学习记录
   async clearStudyRecords(): Promise<void> {
     await localforage.removeItem(STORAGE_KEYS.STUDY_RECORDS)
-  }
-
-  // 保存学习会话
-  async saveStudySession(session: StudySession): Promise<void> {
-    const sessions = await this.getStudySessions()
-    sessions.push(session)
-    await localforage.setItem(STORAGE_KEYS.STUDY_SESSIONS, sessions)
-  }
-
-  // 获取学习会话
-  async getStudySessions(): Promise<StudySession[]> {
-    const sessions = await localforage.getItem<StudySession[]>(STORAGE_KEYS.STUDY_SESSIONS)
-    return sessions || []
   }
 }
 

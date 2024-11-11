@@ -1,4 +1,4 @@
-import type { StudyRecord, StudySession } from '../types/record.types'
+import type { StudyRecord } from '../types/record.types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { englishStorageService } from '../services/storage.service'
@@ -15,35 +15,21 @@ export const useEnglishStore = defineStore('english', () => {
     await loadStudyRecords()
   }
 
+  async function deleteStudyRecord(recordId: string) {
+    await englishStorageService.deleteStudyRecord(recordId)
+    await loadStudyRecords()
+  }
+
   async function clearStudyRecords() {
     await englishStorageService.clearStudyRecords()
     await loadStudyRecords()
   }
 
-  //   async function startNewSession() {
-  //     const session: StudySession = {
-  //       id: crypto.randomUUID(),
-  //       startTime: Date.now(),
-  //       endTime: 0,
-  //       wordsStudied: [],
-  //     }
-  //     currentSession.value = session
-  //   }
-
-  //   async function endCurrentSession() {
-  //     if (currentSession.value) {
-  //       currentSession.value.endTime = Date.now()
-  //       await englishStorageService.saveStudySession(currentSession.value)
-  //       currentSession.value = null
-  //     }
-  //   }
-
   return {
     currentRecords,
     clearStudyRecords,
     loadStudyRecords,
+    deleteStudyRecord,
     addStudyRecord,
-    // startNewSession,
-    // endCurrentSession,
   }
 })

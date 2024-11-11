@@ -1,23 +1,10 @@
 <script setup lang="ts">
-import type { StudyRecord } from '../types/record.types'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
+import { StudyType } from '../constants/study-types'
 import { useEnglishStore } from '../stores/english.store'
+import { formatStudyType } from '../utils/study-type-formatter'
 import RecordList from './RecordList.vue'
-
-// const props = defineProps<{
-//   record: StudyRecord
-// }>()
-
-// const store = useEnglishStore()
-
-// async function markAsMastered() {
-//   const updatedRecord = {
-//     ...props.record,
-//     mastered: true,
-//   }
-//   await store.updateStudyRecord(updatedRecord)
-// }
 
 const { loadStudyRecords, addStudyRecord, clearStudyRecords } = useEnglishStore()
 const { currentRecords } = storeToRefs(useEnglishStore())
@@ -33,8 +20,8 @@ onMounted(() => {
 function saveRecord() {
   addStudyRecord({
     duration: Number(duration.value),
-    studyContent: content.value,
-    studyType: Number(type.value),
+    content: content.value,
+    type: Number(type.value),
     timestamp: dateValue.value.getTime(),
     id: crypto.randomUUID(),
   })
@@ -50,7 +37,7 @@ function clearRecords() {
 </script>
 
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="8">
     <el-col :span="4">
       <el-input
         v-model="duration"
@@ -64,10 +51,14 @@ function clearRecords() {
       />
     </el-col>
     <el-col :span="4">
-      <el-input
-        v-model="type"
-        placeholder="Please input type"
-      />
+      <el-select v-model="type" placeholder="请选择学习类型">
+        <el-option
+          v-for="studyType in Object.values(StudyType).filter(v => !isNaN(Number(v))) as StudyType[]"
+          :key="studyType"
+          :value="studyType"
+          :label="formatStudyType(studyType)"
+        />
+      </el-select>
     </el-col>
     <el-col :span="4">
       <div class="block">
@@ -79,27 +70,21 @@ function clearRecords() {
       </div>
     </el-col>
     <el-col :span="8">
-      <el-button type="success" @click="saveRecord">
-        保存
-      </el-button>
-      <el-button type="danger" @click="clearRecords">
-        清空
-      </el-button>
-      <el-button type="primary" @click="clearRecords">
-        导入
-      </el-button>
-      <el-button type="primary" @click="clearRecords">
-        导出
-      </el-button>
+      <div class="flex justify-right">
+        <el-button type="success" @click="saveRecord">
+          保存
+        </el-button>
+        <el-button type="danger" @click="clearRecords">
+          清空
+        </el-button>
+        <el-button type="primary" @click="clearRecords">
+          导入
+        </el-button>
+        <el-button type="primary" @click="clearRecords">
+          导出
+        </el-button>
+      </div>
     </el-col>
   </el-row>
-
-  <div>{{ duration }}</div>
-  <div>{{ content }}</div>
-  <div>{{ type }}</div>
-  <div>{{ dateValue }}</div>
-  <div>
-    {{ currentRecords }}
-  </div>
   <RecordList :records="currentRecords" />
 </template>
